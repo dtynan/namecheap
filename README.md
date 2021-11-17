@@ -29,6 +29,20 @@ Namecheap.domains.get_list
 
 Please see the Namecheap API documentation for more information
 
+The configuration code will determine the active environment (production
+or sandbox in Namecheap terms) and use the appropriate URL.
+To force the gem to always use the sandbox, set **sandbox = true** in
+the configuration, as follows:
+
+```ruby
+Namecheap.configure do |config|
+  config.key = 'apikey'
+  config.username = 'apiuser'
+  config.client_ip = '127.0.0.1'
+  config.sandbox = true
+end
+```
+
 About this project
 -------------
 

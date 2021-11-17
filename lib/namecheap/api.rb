@@ -2,11 +2,6 @@ require 'active_support/core_ext/string/inflections'
 
 module Namecheap
   class Api
-    SANDBOX = 'https://api.sandbox.namecheap.com/xml.response'
-    PRODUCTION = 'https://api.namecheap.com/xml.response'
-    ENVIRONMENT = defined?(Rails) && Rails.respond_to?(:env) ? Rails.env : (ENV["RACK_ENV"] || 'development')
-    ENDPOINT = (ENVIRONMENT == 'production' ? PRODUCTION : SANDBOX)
-
     def get(command, options = {})
       request 'get', command, options
     end
@@ -33,13 +28,13 @@ module Namecheap
       case method
       when 'get'
         #raise options.inspect
-        HTTParty.get(ENDPOINT, { :query => options})
+        HTTParty.get(Namecheap.config.api_url, { :query => options})
       when 'post'
-        HTTParty.post(ENDPOINT, { :query => options})
+        HTTParty.post(Namecheap.config.api_url, { :query => options})
       when 'put'
-        HTTParty.put(ENDPOINT, { :query => options})
+        HTTParty.put(Namecheap.config.api_url, { :query => options})
       when 'delete'
-        HTTParty.delete(ENDPOINT, { :query => options})
+        HTTParty.delete(Namecheap.config.api_url, { :query => options})
       end
     end
 
